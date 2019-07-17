@@ -1,0 +1,24 @@
+{
+  "name": "abit",
+  "version": "1.0.0",
+  "description": "- NodeJs   - PostGrapHile",
+  "main": "abit.js",
+  "dependencies": {},
+  "devDependencies": {
+    "postgraphile": "^4.4.1"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/renepastor/abit.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/renepastor/abit/issues"
+  },
+  "homepage": "https://github.com/renepastor/abit#readme"
+}
