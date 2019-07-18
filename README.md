@@ -3,5 +3,5 @@
  - PostGrapHile
  - PWA
  
-1 Camara web
- 
+ * 1 Acceso de usuarios con JWT
+ * 2 Administracion de Usuario
