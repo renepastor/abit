@@ -7846,7 +7846,7 @@ base-chart.chart {
     padding: 0.5rem 1rem;
     margin-right: 0;
     background-color: #fff;
-    background-image: url("../img/logo.svg");
+    background-image: url("../img/logo.png");
     background-repeat: no-repeat;
     background-position: center center;
     background-size: 100px auto;
@@ -7938,7 +7938,7 @@ base-chart.chart {
   .brand-minimized .app-header.navbar .navbar-brand {
     width: 50px;
     background-color: #fff;
-    background-image: url("../img/logo-symbol.svg");
+    background-image: url("../img/logo-symbol.png");
     background-size: 45px;
     border-bottom: 1px solid #c2cfd6; } }
 
