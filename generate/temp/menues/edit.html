@@ -1,0 +1,84 @@
+<div class="modal-dialog modal-lg" role="document">
+  <form class="csForm modal-content" id="formModificarMenues">
+   <fieldset>
+    <div class="modal-header p-0">
+      <legend class="modal-title" id="exampleModalLongTitle">  &nbsp; Modificar Menues</legend>
+      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+      <div class="row align-items-start">
+        <div class="form-group col">
+          <label for="rolId">Rol : </label>
+          <select name="rolId" id="rolId" required="required" class="form-control int8">
+            <option value="">--Seleccionar--</option>
+          </select>
+        </div>
+        <div class="form-group col">
+          <label for="enlaId">Enla : </label>
+          <select name="enlaId" id="enlaId" required="required" class="form-control int8">
+            <option value="">--Seleccionar--</option>
+          </select>
+        </div>
+        <div class="form-group col">
+          <label for="estado">Estado : </label>
+          <select name="estado" id="estado" class="form-control text">
+            <option value="C">Activo</option>
+            <option value="X">Inactivo/Eliminado</option>
+          </select>
+        </div><input type="hidden" name="id" id="id" required="required" placeholder="Id" class="int8">
+      </div>
+    </div>
+    <div class="modal-footer justify-content-center p-2">
+      <button type="submit" class="btn btn-sm btn-primary">
+        <i class="fa fa-save"></i> Modificar
+      </button>
+      <button type="button" class="btn btn-sm btn-outline-primary" data-dismiss="modal">
+        Cancelar <i class="fa fa-close"></i> 
+      </button>
+    </div>
+   </fieldset>
+  </form>
+</div>
+<script type="text/javascript">
+$("#formModificarMenues").submit(function(e) {
+    e.preventDefault();
+    var data = $(this);
+    var est = "C";
+    if(!$("#formModificarMenues #estado").prop("checked")){
+      est ="X";
+    }
+    var dt = formInput(this);
+    var p =`mutation{updateMenueById(input:{id:"${$("#id").val()}" menuePatch:{${dt}}}){
+        menue{id}
+       }
+     }`;
+    fnGql({query:p, action:function(res){
+      var d = res.data.updateMenueById.menue.id;
+      if(d>0){
+        $("#pnlModal").modal("toggle");
+        toastr.info("Correctamente", "Se registro");
+        $("tbody#pnlMenues").html(""); 
+        listMenues();
+      }else{
+        toastr.error(res.toString(), "No se registro");
+      }
+    }});
+  });
+  $(document).ready(function() {
+    var dato = JSON.parse(_d(sessionStorage.getItem("menues")));
+    var q =`{menueById(id:"${dato.id}"){ id,rolId,enlaId,estado,usuario,editado}}`;
+        fnGql({query:q, action:function(res){
+          var menue = res.data.menueById;
+          Object.keys(menue).map(res => {
+            $("#"+res).val(menue[res]);
+            if(res == "foto") $("#foto_ax").attr({"src":menue["foto"]});
+          });
+        }});
+     $(" ").datetimepicker({
+        format:"L",locale: "es",format: "DD/MM/YYYY"
+     });
+  });
+</script>
+<script type="text/javascript" src="./js/global.js"></script>

@@ -11,12 +11,12 @@
 	"lang" : "es-BO",
 	"icons": [
 		{
-			"src": "./img/abit.jpg",
+			"src": "./img/logo.png",
 			"type": "image/png",
 			"sizes": "192x192"
 		},
 		{
-			"src": "./img/abit.jpg",
+			"src": "./img/logo.png",
 			"type": "image/png",
 			"sizes": "512x512"
 		}

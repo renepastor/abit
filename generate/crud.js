@@ -16,7 +16,7 @@ const pool = new Pool({
 
 let _tbl = nameTable;
 
-let _phat = "./public/prueb/";
+let _phat = "./temp/";
 
 var dir = _phat + toCamelCase(_tbl);
 if (!fs.existsSync(dir)) {
@@ -345,7 +345,8 @@ function fnTacsList(columnas){
   '          if(d.length > 0 && parseInt((pg+d.length)/pag) <= parseInt(n/pag)){\n'+
   '            $("#load").html("Cargando....");\n'+
   '            d.map(function(row) {\n'+
-  '              $("#pnlPg").html("Nro Reg. "+(pg+(c++))+" de "+n);\n'+
+  '              $(".table-responsive").height(document.body.scrollHeight - 150);\n'+
+  '              $("#pnlPg").html("Nro Reg. "+(pg+(c++))+" de "+n+`  <button class="btn btn-sm" onclick="pg = pg+pag; '+toCamelCase("list_"+_tbl)+'(pg);">Siguiente <i class="fa fa-chevron-right"></i></button>`);\n'+
   '              $("tbody#'+pnlList+'").append(`\n'+
   '                  <tr class="${row.estado}">\n'+
   '                    <td>\n'+
@@ -358,7 +359,7 @@ function fnTacsList(columnas){
   '            $("button.permisos").popover({html:true});\n'+
   '            $("button.permisos").on("click", function(){permisos(this);});\n'+
   '            $("#load").html("");\n'+
-  '            fnTableScroll("table");\n'+
+  '            //fnTableScroll("table");\n'+
   '          }else{$(".project-stats").attr("disabled", "disabled").off("scroll");}\n'+
   '        }});\n'+
   '      }\n'+

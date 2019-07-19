@@ -45,7 +45,7 @@ app.use(postgraphql(
   postgresConfig,
   process.env.POSTGRAPHQL_SCHEMA, {
     graphiql: true,
-    watchPg: true,
+    watchPg: false,
     enableCors: true,
     jwtPgTypeIdentifier: `${process.env.POSTGRAPHQL_SCHEMA}.jwt`,
     jwtSecret: process.env.JWT_SECRET,
