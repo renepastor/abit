@@ -1,5 +1,5 @@
 /node_modules
-/generate/crud
+/generate/temp
 /package-lock.json
 /public/node_modules
 /public/package-lock.json
