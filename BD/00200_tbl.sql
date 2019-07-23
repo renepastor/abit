@@ -34,7 +34,7 @@ create table nucleo.usuarios (
   pers_id dllave primary key,
   cuenta dtexto2 unique,
   clave dtexto2,
-  foto dfoto,
+  foto dfoto2,
   alias dtexto2,
   estado destado,
   usuario duser,
