@@ -105,6 +105,8 @@
     //this.get('#repoEessPP',         function(){this.partial(vw+'/reportes/eess/index_p.html');});
     this.get('#ambientes',        function(){this.partial(vw+'/ambientes/index.html');});
     this.get('#domReporte',       function(){this.partial(vw+'/ambientes/reporte.html');});
+    /**QR*/
+    this.get('#qr',       function(){this.partial(vw+'/qr/leer.html');});
   });
 
   $(function(){

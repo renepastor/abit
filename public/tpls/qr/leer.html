@@ -1,4 +1,13 @@
+<script src="./js/qrcode.js"></script>
+<script src="./js/jsqr.js"></script>
+
 <h1>jsQR Demo</h1>
+
+  <div id="qrcode"></div>
+  <script type="text/javascript">
+   new QRCode(document.getElementById("qrcode"), "http://jindo.dev.naver.com/collie");
+  </script>
+
   <a id="githubLink" href="https://github.com/cozmo/jsQR">View documentation on Github</a>
   <p>Pure JavaScript QR code decoding library.</p>
   <div id="loadingMessage">🎥 Unable to access video stream (please make sure you have a webcam enabled)</div>
