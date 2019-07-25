@@ -106,7 +106,7 @@
     this.get('#ambientes',        function(){this.partial(vw+'/ambientes/index.html');});
     this.get('#domReporte',       function(){this.partial(vw+'/ambientes/reporte.html');});
     /**QR*/
-    this.get('#qr',       function(){this.partial(vw+'/qr/leer.html');});
+    this.get('#qr',       function(){this.partial(vw+'/home/leerQR.html');});
   });
 
   $(function(){
