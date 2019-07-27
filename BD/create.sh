@@ -15,6 +15,7 @@ psql $name_bd < 00100_domain.sql 2>> error > log
 psql $name_bd < 00200_tbl.sql 2>> error >> log
 psql $name_bd < 00204_tbl_dom.sql 2>> error >> log
 psql $name_bd < 00205_tbl_tmb.sql 2>> error >> log
+psql $name_bd < 00206_tbl_fch.sql 2>> error >> log
 
 
 echo '    ******* Funciones....' >> error

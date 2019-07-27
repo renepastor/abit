@@ -58,7 +58,7 @@ create table nucleo.tmb_puestos_propietarios (
 
 create table nucleo.tmb_documentos(
   id bigserial primary key,
-  propietario_id dllave,
+  puesto_propietario_id dllave,
   tipo_documento_id dllave,
   archivo djson,
   estado destado,
