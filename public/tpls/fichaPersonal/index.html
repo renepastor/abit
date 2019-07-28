@@ -5,16 +5,12 @@
     <tr>
       <th><button class="btn btn-sm btn-new fa fa-plus-square" data-backdrop="static" data-toggle="modal" data-url="/fichaPersonal/add.html" data-target="#pnlModal" id="new">Nuevo</button></th>
       <th nowrap class="csHidden">Id</th>
-    <th nowrap>Nombre</th>
-    <th nowrap>Emergencias</th>
-    <th nowrap>Foto</th>
-    <th nowrap>Notas</th>
-    <th nowrap>Direccion</th>
-    <th nowrap>Fecha Nacimiento</th>
-    <th nowrap>Ci</th>
-    <th nowrap>Tipo Sangre</th>
-    <th nowrap>Contactos</th>
-
+      <th nowrap>Foto</th>
+      <th nowrap>Nombre</th>
+      <th nowrap>Direccion</th>
+      <th nowrap>Fecha Nacimiento</th>
+      <th nowrap>Ci</th>
+      <th nowrap>QR</th>
     </tr>
   </thead>
   <tbody id="pnlFichaPersonal">
@@ -37,23 +33,21 @@
             d.map(function(row) {
               $(".table-responsive").height(document.body.scrollHeight - 150);
               $("#pnlPg").html("Nro Reg. "+(pg+(c++))+" de "+n+`  <button class="btn btn-sm" onclick="pg = pg+pag; listFichaPersonal(pg);">Siguiente <i class="fa fa-chevron-right"></i></button>`);
+              
               $("tbody#pnlFichaPersonal").append(`
                   <tr class="${row.estado}">
                     <td>
                       <button class="btn btn-sm btn-outline-primary fa fa-edit" title="Modificar fichaPersonal" onClick="fnUrl(this);" data-url="/fichaPersonal/edit.html" data-backdrop="static" data-toggle="modal" data-target="#pnlModal" data-dato='{"id":"${row.id}"}' data-name="fichaPersonal" id="${row.id}"></button>
                     </td>
+                    <td><img src="${row.foto}"></td>
                     <td>${row.nombre}</td>
-                    <td>${row.emergencias}</td>
-                    <td>${row.foto}</td>
-                    <td>${row.notas}</td>
                     <td>${row.direccion}</td>
                     <td>${row.fechaNacimiento}</td>
                     <td>${row.ci}</td>
-                    <td>${row.tipoSangre}</td>
-                    <td>${row.contactos}</td>
-
+                    <td id="qr_${row.id}"></td>
                   </tr>`
               );
+              new QRCode(document.getElementById("qr_"+row.id), "p3850n4="+row.id);
             });
             $("button.permisos").popover({html:true});
             $("button.permisos").on("click", function(){permisos(this);});

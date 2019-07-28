@@ -518,3 +518,48 @@ function listAjaxSelect(name,id, val){
     }});
   }
 })(document);
+
+
+
+
+function minimizarImg(params) {
+  /**
+  *Funcion minimiza imagen en javascript
+  *params.img = identificador de la imagen
+  *params.input = identificador de la input donde almacenara la imagen
+  *params.w = ancho de la imagen, default 100
+  *params.h = alto de la imagen, default 100
+  **/
+  defaults = {
+    imge:this.id,
+    input:this.id,
+    w:100,
+    h:100
+  }
+  var params =$.extend({},defaults, params);
+  var idFile = params.input+"File";
+  var preview = document.getElementById(idFile).files[0];
+  //var file    = document.querySelector("input[type=file]").files[0];
+  var file    = document.getElementById(idFile).files[0];
+  var reader  = new FileReader();
+  //document.getElementById("pngHolder").innerHTML = "";
+  if (file) {
+    reader.readAsDataURL(file);
+  } else {
+    preview.src = "";
+  }
+  reader.onloadend = function () {
+    // $("#ringoImage").attr("src",reader.result);
+    var img = new Image(params.w,params.h);
+    img.src = reader.result;
+    img.onload = function(){
+      var canvas = document.createElement("canvas");
+      canvas.width = params.w;
+      canvas.height = params.h;
+      canvas.getContext("2d").drawImage(img, 0, 0, params.w,params.h);
+      var imgText =  canvas.toDataURL("image/png");
+      document.getElementById(params.imge).src=imgText;
+      document.getElementById(params.input).value=imgText;
+    }
+  }
+}

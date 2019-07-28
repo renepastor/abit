@@ -1,7 +1,7 @@
 #!/bin/bash
 
 postgraphile \
-  --connection postgres://localhost:5432/BDYPFB \
+  --connection postgres://localhost:5432/bd_abit \
   --schema nucleo \
   --host localhost \
   --port 8005 \

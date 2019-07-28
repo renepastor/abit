@@ -1,7 +1,8 @@
 <script src="./js/qrcode.js"></script>
 <script src="./js/jsQR.js"></script>
 
-<h1>jsQR Demo</h1>
+<h1>FICHA</h1>
+<table id="ficha"></table>
 
   
 
@@ -65,11 +66,36 @@
           outputMessage.hidden = true;
           outputData.parentElement.hidden = false;
           outputData.innerText = code.data;
+          //fnQrPersonal(idPersona)
         } else {
           outputMessage.hidden = false;
           outputData.parentElement.hidden = true;
         }
       }
       requestAnimationFrame(tick);
+    }
+    
+    function fnQrPersonal(idPersona){
+    
+      $("table#ficha").html("");
+        var q =`query{fichaPersonalById(id:"${idPersona}"){id nombre emergencias foto notas direccion fechaNacimiento ci tipoSangre contactos}}`;
+        fnGql({query:q, action:function(res){
+            var row = res.data.fichaPersonalById;
+            $("#load").html("Cargando....");
+            $("table#ficha").html(`
+                  <tr class="${row.estado}">
+                    <td>${row.nombre}</td>
+                    <td><img src="${row.foto}"></td>
+                  </tr>
+                  <tr>
+                    <td>${row.direccion}</td>
+                    <td>${row.fechaNacimiento}</td>
+                  </tr>
+                  <tr>
+                    <td>${row.ci}</td>
+                    <td id="qr_${row.id}"></td>
+                  </tr>`
+              );
+            }});
     }
   </script>

@@ -106,9 +106,9 @@
     this.get('#ambientes',        function(){this.partial(vw+'/ambientes/index.html');});
     this.get('#domReporte',       function(){this.partial(vw+'/ambientes/reporte.html');});
     /**QR*/
-    this.get('#qr',       function(){this.partial(vw+'/home/leerQR.html');});
-    this.get('#fichaPer',       function(){this.partial(vw+'/fichaPersonal/index.html');});
-    this.get('#fichaMas',       function(){this.partial(vw+'/fichaMascotas/index.html');});
+    this.get('#qr',               function(){this.partial(vw+'/home/leerQR.html');});
+    this.get('#fichaPersonal',    function(){this.partial(vw+'/fichaPersonal/index.html');});
+    this.get('#fichaMascota',     function(){this.partial(vw+'/fichaMascotas/index.html');});
   });
 
   $(function(){

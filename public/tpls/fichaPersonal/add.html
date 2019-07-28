@@ -23,7 +23,7 @@
             <input type="hidden" name="foto" id="foto" class="text">
             <i>Foto</i>
             <input type="file" name="fotoFile" id="fotoFile" placeholder="Imagen" required="required" 
-            class="form-control file-img" onchange="minimizarImg({'imge':'required="required"_ax','input':'required="required"'});"/>
+            class="form-control file-img" onchange="minimizarImg({'imge':'foto_ax','input':'foto'});"/>
           </label>
         </div>
         <div class="form-group col">
@@ -47,7 +47,40 @@
           <label for="tipoSangre">Tipo Sangre : </label>
           <input type="text" name="tipoSangre" id="tipoSangre" required="required" placeholder="Tipo Sangre" size="30" class="form-control text">
         </div>
-        
+        <div class="form-group col">
+          <label for="notas">Notas : </label>
+          <div class='input-group' id='s'>
+            <input type="hidden" name="notas" id="notas" required="required" class="form-control json" value="">
+            <span class="input-group-addon" id="btnPLusNotas">
+              <span class="fa fa-th"></span>
+            </span>
+            <div id="list_notas">
+              <table class="list">
+                <thead>
+                  <tr><th>Nota</th></tr>
+                </thead>
+                <tbody></tbody>                
+              </table>
+            </div>
+          </div>
+        </div>
+        <div class="form-group col">
+            <label for="contactos">Contactos : </label>
+            <div class='input-group' id='s'>
+              <input type="hidden" name="contactos" id="contactos" required="required" class="form-control json" value="">
+              <span class="input-group-addon" id="btnPLusContactos">
+                <span class="fa fa-th"></span>
+              </span>
+              <div id="list_contactos">
+                <table class="list">
+                  <thead>
+                    <tr><th>Nombre</th><th>Telefono</th></tr>
+                  </thead>
+                  <tbody></tbody>                
+                </table>
+              </div>
+            </div>
+          </div>
       </div>
     </div>
     <div class="modal-footer justify-content-center p-2">
@@ -90,6 +123,37 @@ $("#formCrearFichaPersonal").submit(function(e) {
      $(" #fechaNacimientoDtti ").datetimepicker({
         format:"L",locale: "es",format: "DD/MM/YYYY"
      });
+     $("#btnPLusNotas").on("click", function(){
+      $("div#list_notas tbody").prepend(`<tr><td><span data-aux="notas" onclick="fnCreateInput(this)">.....</span></td></tr>`)
+     })
+     $("#btnPLusContactos").on("click", function(){
+      $("div#list_contactos tbody").prepend(`<tr><td><span data-aux="contactos" onclick="fnCreateInput(this)">.....</span></td><td><span data-aux="contactos" onclick="fnCreateInput(this)">.....</span></td></tr>`)
+     })
+     
   });
+  function fnCreateInput(obj){
+    var texto = ""; var name = obj.dataset.aux;
+    if($(obj).text() !== ".....")texto = $(obj).text();
+    $(obj).parent().html(`<input type="text" id="nombreList" data-aux="${name}" onBlur="fnInputText(this)" class="form-control w-100 text" value="${texto}"/>`);
+  }
+  function fnInputText(obj){
+    console.log(obj.dataset.aux);
+    $(obj).parent().html(`<span onclick="fnCreateInput(this)">${obj.value}</span>`);
+    listaGridJson(obj.dataset.aux);
+  }
+  function listaGridJson(idTabla){
+    var lista = [], row ={}; 
+
+    $("#list_"+idTabla+" tbody tr").map((r,reg) =>{
+      row ={};
+      $("#list_"+idTabla+" thead th").map((rt, regTd)=> {
+        console.log(rt, $(regTd).text(), $(reg).find("td").eq(rt).text());
+        row[$(regTd).text()] = $(reg).find("td").eq(rt).text();
+      })
+      lista.push(row);
+    })
+    console.log(JSON.stringify(lista));
+    $("#"+idTabla).val(JSON.stringify(lista));
+  }
 </script>
 <script type="text/javascript" src="./js/global.js"></script>

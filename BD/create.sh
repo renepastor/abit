@@ -26,6 +26,7 @@ echo '    ******* Datos....' >> error
 psql $name_bd < 00400_data.sql 2>> error >> log
 psql $name_bd < 00404_data_dom.sql 2>> error >> log
 psql $name_bd < 00405_data_tmb.sql 2>> error >> log
+psql $name_bd < 00406_data_fch.sql 2>> error >> log
 
 echo '    ******* Referencias....' >> error
 psql $name_bd < 00500_ref.sql 2>> error >> log
