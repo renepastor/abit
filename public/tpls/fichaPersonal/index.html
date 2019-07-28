@@ -47,7 +47,7 @@
                     <td id="qr_${row.id}"></td>
                   </tr>`
               );
-              new QRCode(document.getElementById("qr_"+row.id), "p3850n4="+row.id);
+              var qrcode = new QRCode(document.getElementById("qr_"+row.id), {text: "p3850n4="+row.id, width: 128, height: 128});
             });
             $("button.permisos").popover({html:true});
             $("button.permisos").on("click", function(){permisos(this);});

@@ -82,8 +82,7 @@
           outputData.parentElement.hidden = false;
           outputData.innerText = code.data;
           if(code.data!==""){
-            var dato = (code.data).split("=");
-            fnQrPersonal(dato[1]);
+            fnQrPersonal(code.data);
             $("#cancelar").click();
             $("#pnlModal").html("");
           }
@@ -95,10 +94,49 @@
       requestAnimationFrame(tick);
     }
     
-    function fnQrPersonal(idPersona){
-    
-      $("table#ficha").html("");
-        var q =`query{fichaPersonalById(id:"${idPersona}"){id nombre emergencias foto notas direccion fechaNacimiento ci tipoSangre contactos}}`;
+    function fnQrPersonal(code){
+      var dato = (code).split("=");
+      if(dato[0]=="m45c0t4"){
+        $("table#ficha").html("");
+        var q =`query{fichaMascotasById(id:"${dato[1]}"){id nombre nombreDueno direccionDueno foto notas contactos adicionales}}`;
+        fnGql({query:q, action:function(res){
+            var row = res.data.fichaPersonalById;
+            var notas = "", contactos = "";
+            row.notas.JSON.parse().map(reg => notas+`<li>${res.Notas}</li>`);
+            row.contactos.JSON.parse().map(reg => contactos+`<li>${res.Nombre} ${res.Telefono}</li>`);
+            $("#load").html("Cargando....");
+            $("table#ficha").html(`
+                <tr class="${row.estado}">
+                  <td><b>Nombre : </b>${row.nombre}<br/>
+                    <b>Dueño : </b>${row.nombreDueno}
+                  </td>
+                  <td><img src="${row.foto}"></td>
+                </tr>
+                <tr>
+                  <td colspan="2"><b>Notas : </b>
+                    <ul>${notas}</ul>
+                  </td>
+                </tr>
+                <tr>
+                  <td><b>Direccion : </b>${row.direccion}</td>
+                  <td><b>Fecha Nacimiento : </b>${row.fechaNacimiento}</td>
+                </tr>
+                <tr>
+                  <td><b>Carnet de Identidad : </b>${row.ci}</td>
+                  <td><b>Tipo de Sangre : </b>${row.tipoSangre}</td>
+                </tr>
+                <tr>
+                  <td colspan="2"><b>Contactos : </b>
+                    <ul>${contactos}</ul>
+                  </td>
+                </tr>`
+              );
+            }});
+      }
+
+      if(dato[0]=="p3850n4"){
+        $("table#ficha").html("");
+        var q =`query{fichaPersonalById(id:"${dato[1]}"){id nombre emergencias foto notas direccion fechaNacimiento ci tipoSangre contactos}}`;
         fnGql({query:q, action:function(res){
             var row = res.data.fichaPersonalById;
             $("#load").html("Cargando....");
@@ -119,5 +157,6 @@
                   </tr>`
               );
             }});
+      }
     }
   </script>

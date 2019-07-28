@@ -5,15 +5,11 @@
     <tr>
       <th><button class="btn btn-sm btn-new fa fa-plus-square" data-backdrop="static" data-toggle="modal" data-url="/fichaMascotas/add.html" data-target="#pnlModal" id="new">Nuevo</button></th>
       <th nowrap class="csHidden">Id</th>
-    <th nowrap>Nombre</th>
-    <th nowrap>Foto</th>
-    <th nowrap>Notas</th>
-    <th nowrap>Nombre Dueño</th>
-    <th nowrap>Direccion Dueño</th>
-    <th nowrap>Coordenadas</th>
-    <th nowrap>Contactos</th>
-    <th nowrap>Adicionales</th>
-
+      <th nowrap>Foto</th>
+      <th nowrap>Nombre</th>
+      <th nowrap>Nombre Dueño</th>
+      <th nowrap>Direccion Dueño</th>
+      <th nowrap>QR</th>
     </tr>
   </thead>
   <tbody id="pnlFichaMascotas">
@@ -27,7 +23,7 @@
   });
     $("tbody#pnlFichaMascotas").html("");
     var listFichaMascotas =function(pg=0,limit=pag, n=0, c=1){
-        var q =`query{allFichaMascotas(offset:${pg}, first:${limit} orderBy: EDITADO_DESC){totalCount nodes{id nombre foto notas nombreDueño direccionDueño coordenadas contactos adicionales  estado editado usuario }}}`;
+        var q =`query{allFichaMascotas(offset:${pg}, first:${limit} orderBy: EDITADO_DESC){totalCount nodes{id nombre foto nombreDueno direccionDueno estado editado usuario }}}`;
         fnGql({query:q, action:function(res){
           var d = res.data.allFichaMascotas.nodes;
           n = res.data.allFichaMascotas.totalCount;
@@ -41,17 +37,15 @@
                     <td>
                       <button class="btn btn-sm btn-outline-primary fa fa-edit" title="Modificar fichaMascotas" onClick="fnUrl(this);" data-url="/fichaMascotas/edit.html" data-backdrop="static" data-toggle="modal" data-target="#pnlModal" data-dato='{"id":"${row.id}"}' data-name="fichaMascotas" id="${row.id}"></button>
                     </td>
+                    <td><img src="${row.foto}"></td>
                     <td>${row.nombre}</td>
-                    <td>${row.foto}</td>
-                    <td>${row.notas}</td>
-                    <td>${row.nombreDueño}</td>
-                    <td>${row.direccionDueño}</td>
-                    <td>${row.coordenadas}</td>
-                    <td>${row.contactos}</td>
-                    <td>${row.adicionales}</td>
-
+                    <td>${row.nombreDueno}</td>
+                    <td>${row.direccionDueno}</td>
+                    <td id="qr_${row.id}"></td>
                   </tr>`
               );
+              var qrcode = new QRCode(document.getElementById("qr_"+row.id), {text: "m45c0t4="+row.id, width: 128, height: 128});
+              
             });
             $("button.permisos").popover({html:true});
             $("button.permisos").on("click", function(){permisos(this);});

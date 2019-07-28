@@ -131,29 +131,6 @@ $("#formCrearFichaPersonal").submit(function(e) {
      })
      
   });
-  function fnCreateInput(obj){
-    var texto = ""; var name = obj.dataset.aux;
-    if($(obj).text() !== ".....")texto = $(obj).text();
-    $(obj).parent().html(`<input type="text" id="nombreList" data-aux="${name}" onBlur="fnInputText(this)" class="form-control w-100 text" value="${texto}"/>`);
-  }
-  function fnInputText(obj){
-    console.log(obj.dataset.aux);
-    $(obj).parent().html(`<span onclick="fnCreateInput(this)">${obj.value}</span>`);
-    listaGridJson(obj.dataset.aux);
-  }
-  function listaGridJson(idTabla){
-    var lista = [], row ={}; 
-
-    $("#list_"+idTabla+" tbody tr").map((r,reg) =>{
-      row ={};
-      $("#list_"+idTabla+" thead th").map((rt, regTd)=> {
-        console.log(rt, $(regTd).text(), $(reg).find("td").eq(rt).text());
-        row[$(regTd).text()] = $(reg).find("td").eq(rt).text();
-      })
-      lista.push(row);
-    })
-    console.log(JSON.stringify(lista));
-    $("#"+idTabla).val(JSON.stringify(lista));
-  }
+  
 </script>
 <script type="text/javascript" src="./js/global.js"></script>
