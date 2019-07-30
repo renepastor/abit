@@ -1,16 +1,9 @@
-<div class="modal-dialog modal-lg" role="document">
-  <form class="csForm modal-content" id="formCrearTblTipos">
-   <fieldset>
-    <div class="modal-header p-0">
-      <legend class="modal-title" id="exampleModalLongTitle">  &nbsp; Lector QR</legend>
-      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-        <span aria-hidden="true">&times;</span>
-      </button>
-    </div>
-    <div class="modal-body">
-      <div class="row align-items-start">
-        <div class="form-group col">
+<h1>FICHA</h1>
+<table id="ficha"></table>
 
+  
+
+  <p>Lector QR</p>
   <div id="loadingMessage">Cargando QR...</div>
   
   <canvas id="canvas" hidden></canvas>
@@ -19,20 +12,6 @@
     <div hidden><b>Data:</b> <span id="outputData"></span></div>
   </div>
   <div id="qrcode"></div>
-  
-  
-  </div>
-        
-      </div>
-    </div>
-    <div class="modal-footer justify-content-center p-2">
-      <button type="button" class="btn btn-sm btn-outline-primary" data-dismiss="modal" id="cancelar">
-        Cancelar <i class="fa fa-close"></i> 
-      </button>
-    </div>
-   </fieldset>
-  </form>
-</div>
   <script>
     var video = document.createElement("video");
     var canvasElement = document.getElementById("canvas");
@@ -84,8 +63,6 @@
           if(code.data!==""){
             var dato = (code.data).split("=");
             fnQrPersonal(dato[1]);
-            $("#cancelar").click();
-            $("#pnlModal").html("");
           }
         } else {
           outputMessage.hidden = false;
@@ -104,18 +81,16 @@
             $("#load").html("Cargando....");
             $("table#ficha").html(`
                   <tr class="${row.estado}">
-                    <td><b>Nombre : </b>${row.nombre}<br/>
-                      <b>Emergencias : </b>${row.emergencias}
-                    </td>
+                    <td>${row.nombre}</td>
                     <td><img src="${row.foto}"></td>
                   </tr>
                   <tr>
-                    <td><b>Direccion : </b>${row.direccion}</td>
-                    <td><b>Fecha Nacimiento : </b>${row.fechaNacimiento}</td>
+                    <td>${row.direccion}</td>
+                    <td>${row.fechaNacimiento}</td>
                   </tr>
                   <tr>
-                    <td><b>Carnet de Identidad : </b>${row.ci}</td>
-                    <td><b>Tipo de Sangre : </b>${row.tipoSangre}</td>
+                    <td>${row.ci}</td>
+                    <td id="qr_${row.id}"></td>
                   </tr>`
               );
             }});
