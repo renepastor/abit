@@ -93,44 +93,45 @@
       }
       requestAnimationFrame(tick);
     }
-    
+    //fnQrPersonal("m45c0t4=1");
     function fnQrPersonal(code){
       var dato = (code).split("=");
       if(dato[0]=="m45c0t4"){
         $("table#ficha").html("");
-        var q =`query{fichaMascotasById(id:"${dato[1]}"){id nombre nombreDueno direccionDueno foto notas contactos adicionales}}`;
+        var q =`query{fichaMascotaById(id:"${dato[1]}"){id nombre nombreDueno direccionDueno foto coordenadas notas contactos adicionales}}`;
         fnGql({query:q, action:function(res){
-            var row = res.data.fichaPersonalById;
-            var notas = "", contactos = "";
-            row.notas.JSON.parse().map(reg => notas+`<li>${res.Notas}</li>`);
-            row.contactos.JSON.parse().map(reg => contactos+`<li>${res.Nombre} ${res.Telefono}</li>`);
+            var row = res.data.fichaMascotaById;
+            var notas = "", contactos = "", adicionales = "";
+            JSON.parse(row.notas).map(r => {if(r.Nota != "") notas = notas+`<li>${r.Nota}</li>`;});
+            JSON.parse(row.contactos).map(r => {if(r.Telefono != "") contactos = contactos+`<li>${r.Nombre} <i class="fa fa-phone"></i>${r.Telefono}</li>`;});
+            JSON.parse(row.adicionales).map(r => {if(r.Adicionales != "") adicionales = adicionales+`<li>${r.Adicionales}</li>`;});
             $("#load").html("Cargando....");
+            
             $("table#ficha").html(`
                 <tr class="${row.estado}">
                   <td><b>Nombre : </b>${row.nombre}<br/>
-                    <b>Dueño : </b>${row.nombreDueno}
+                    <b>Dueño : </b>${row.nombreDueno}<br/>
+                    <b>Direccion : </b>${row.direccionDueno}
                   </td>
                   <td><img src="${row.foto}"></td>
                 </tr>
                 <tr>
-                  <td colspan="2"><b>Notas : </b>
-                    <ul>${notas}</ul>
-                  </td>
-                </tr>
+                  <td><input type="hidden" id="mapitaImg" value="${row.coordenadas}"><div style="height: 200px; width:200px !important ;" id="map"></div></td>
+                  <td><b>Notas : </b>
+                    <ul>${notas}</ul></td>
                 <tr>
-                  <td><b>Direccion : </b>${row.direccion}</td>
-                  <td><b>Fecha Nacimiento : </b>${row.fechaNacimiento}</td>
-                </tr>
-                <tr>
-                  <td><b>Carnet de Identidad : </b>${row.ci}</td>
-                  <td><b>Tipo de Sangre : </b>${row.tipoSangre}</td>
-                </tr>
                 <tr>
                   <td colspan="2"><b>Contactos : </b>
                     <ul>${contactos}</ul>
                   </td>
+                </tr>
+                <tr>
+                  <td colspan="2"><b>Adicionales : </b>
+                    <ul>${adicionales}</ul>
+                  </td>
                 </tr>`
               );
+              mapPoint("mapitaImg");
             }});
       }
 
@@ -140,6 +141,10 @@
         fnGql({query:q, action:function(res){
             var row = res.data.fichaPersonalById;
             $("#load").html("Cargando....");
+            console.log(JSON.parse(row.notas));
+            var notas = "", contactos = "";
+            JSON.parse(row.notas).map(r => {if(r.Nota != "") notas = notas+`<li>${r.Nota}</li>`;});
+            JSON.parse(row.contactos).map(r => {if(r.Telefono != "") contactos = contactos+`<li>${r.Nombre} <i class="fa fa-phone">${r.Telefono}</li>`;});
             $("table#ficha").html(`
                   <tr class="${row.estado}">
                     <td><b>Nombre : </b>${row.nombre}<br/>
@@ -148,15 +153,26 @@
                     <td><img src="${row.foto}"></td>
                   </tr>
                   <tr>
-                    <td><b>Direccion : </b>${row.direccion}</td>
-                    <td><b>Fecha Nacimiento : </b>${row.fechaNacimiento}</td>
+                  <td colspan="2"><b>Notas : </b>
+                    <ul>${notas}</ul>
+                  </td>
+                </tr>
+                  <tr>
+                    <td><b>Direccion : </b><br>${row.direccion}</td>
+                    <td><b>Fecha Nacimiento : </b><br>${row.fechaNacimiento}</td>
                   </tr>
                   <tr>
-                    <td><b>Carnet de Identidad : </b>${row.ci}</td>
-                    <td><b>Tipo de Sangre : </b>${row.tipoSangre}</td>
-                  </tr>`
+                    <td><b>Carnet de Identidad : </b><br>${row.ci}</td>
+                    <td><b>Tipo de Sangre : </b><br>${row.tipoSangre}</td>
+                  </tr>
+                  <tr>
+                  <td colspan="2"><b>Contactos : </b>
+                    <ul>${contactos}</ul>
+                  </td>
+                </tr>`
               );
             }});
       }
     }
+
   </script>

@@ -41,7 +41,7 @@
                     <td>${row.nombre}</td>
                     <td>${row.nombreDueno}</td>
                     <td>${row.direccionDueno}</td>
-                    <td id="qr_${row.id}"></td>
+                    <td class="p-2" id="qr_${row.id}"></td>
                   </tr>`
               );
               var qrcode = new QRCode(document.getElementById("qr_"+row.id), {text: "m45c0t4="+row.id, width: 128, height: 128});
